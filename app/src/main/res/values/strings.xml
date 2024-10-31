@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Around Egypt</string>
+    <string name="try_luxor_hint">Try Luxor</string>
+    <string name="recommended_msg">RECOMMENDED</string>
+    <string name="now_you_can_msg">Now you can explore any experience in 360 degrees and get all the details about it all in one place.</string>
+    <string name="welcome_msg">Welcome!</string>
+    <string name="recommended_experiences_msg">Recommended Experiences</string>
+    <string name="most_recent_msg">Most Recent</string>
 </resources>
