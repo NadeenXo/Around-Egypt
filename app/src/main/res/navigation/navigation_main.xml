@@ -16,9 +16,9 @@
     </fragment>
     <fragment
         android:id="@+id/experienceFragment"
-        android:name="com.example.aroundegypt.ExperienceFragment"
+        android:name="com.example.aroundegypt.SearchFragment"
         android:label="Experience"
-        tools:layout="@layout/fragment_experience">
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_experienceFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
