@@ -6,17 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/iv_menu"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SearchView
+        android:id="@+id/sv_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/gray"
+        android:queryHint='@string/try_luxor_hint'
+        app:layout_constraintBottom_toBottomOf="@+id/iv_menu"
+        app:layout_constraintEnd_toStartOf="@+id/iv_filter"
+        app:layout_constraintStart_toEndOf="@+id/iv_menu"
+        app:layout_constraintTop_toTopOf="@+id/iv_menu" />
+
+    <ImageView
+        android:id="@+id/iv_filter"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="22dp"
+        android:src="@drawable/filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_menu" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:background="@color/white"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_search"
         app:navGraph="@navigation/navigation_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

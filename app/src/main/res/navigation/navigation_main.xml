@@ -11,16 +11,16 @@
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_experienceFragment"
-            app:destination="@id/experienceFragment" />
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
-        android:id="@+id/experienceFragment"
+        android:id="@+id/searchFragment"
         android:name="com.example.aroundegypt.SearchFragment"
-        android:label="Experience"
+        android:label="Search"
         tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_experienceFragment_to_homeFragment"
+            android:id="@+id/action_searchFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
