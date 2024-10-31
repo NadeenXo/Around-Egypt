@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.aroundegypt"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.aroundegypt"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
