@@ -7,18 +7,6 @@
     tools:context=".ExperienceActivity">
 
     <TextView
-        android:id="@+id/tv_views_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_eye"
-        app:layout_constraintStart_toEndOf="@+id/iv_eye"
-        tools:text="156" />
-
-    <TextView
         android:id="@+id/tv_likes_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Nubian House"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -57,7 +45,9 @@
     <ImageView
         android:id="@+id/iv_cover"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
+        android:minHeight="300dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -86,7 +76,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_button"
+        android:background="@drawable/shape_rounded"
         android:text="@string/explore_now_msg"
         android:textColor="@color/colorPrimaryVariant"
         android:textSize="16sp"
@@ -94,6 +84,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_cover" />
+
+    <TextView
+        android:id="@+id/tv_views_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_eye"
+        app:layout_constraintStart_toEndOf="@+id/iv_eye"
+        tools:text="156" />
 
     <ImageView
         android:id="@+id/iv_share"
@@ -110,7 +112,7 @@
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aswan ,Egypt"
+        android:text="@string/subtitle_hint"
         android:textColor="@color/material_dynamic_neutral30"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_title"

@@ -16,6 +16,11 @@ class HomeFragment : Fragment(), RecommendedListener, RecentListener {
     private lateinit var viewModel: ExperienceViewModel
     private lateinit var experienceAdapter: RecommendedAdapter
     private lateinit var recentAdapter: RecentAdapter
+
+    companion object {
+        const val EXPERIENCE_ID = "package com.example.aroundegypt;id"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,19 +69,18 @@ class HomeFragment : Fragment(), RecommendedListener, RecentListener {
     }
 
     override fun onExperienceClick(id: String) {
-        //todo: goto another page
         navigateToExperience(id)
     }
 
     private fun navigateToExperience(id: String) {
         val intent = Intent(requireActivity(), ExperienceActivity()::class.java)
-        intent.putExtra("id", id)
+        intent.putExtra(EXPERIENCE_ID, id)
         startActivity(intent)
     }
 
     override fun onRecommendedClick(id: String) {
         val intent = Intent(requireActivity(), ExperienceActivity()::class.java)
-        intent.putExtra("id", id)
+        intent.putExtra(EXPERIENCE_ID, id)
         startActivity(intent)
     }
 }
