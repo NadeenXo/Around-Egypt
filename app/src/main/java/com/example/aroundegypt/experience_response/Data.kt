@@ -17,7 +17,7 @@ data class Data(
     val id: String,
     val is_liked: Any,
     val likes_no: Int,
-    val opening_hours: OpeningHours,
+//    val opening_hours: OpeningHours?, // java.lang.IllegalStateException: Expected BEGIN_ARRAY but was BEGIN_OBJECT at line 1 column 4827 path $.data[0].opening_hours
     val period: Period,
     val rating: Int,
     val recommended: Int,
