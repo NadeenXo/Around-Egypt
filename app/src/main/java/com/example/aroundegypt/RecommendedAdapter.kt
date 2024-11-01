@@ -53,7 +53,6 @@ class RecommendedAdapter(
             .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
             .into(holder.binding.ivCover)
 
-        // Check if the meal is favorite
         favDao = FavDataBase.getInstance(holder.itemView.context).favDao()
 
         CoroutineScope(Dispatchers.IO).launch {

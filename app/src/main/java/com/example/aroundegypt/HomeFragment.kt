@@ -37,7 +37,7 @@ class HomeFragment : Fragment(), RecommendedListener, RecentListener {
 
         setupViewModel()
         viewModel.getExperiencedData()
-        viewModel.getRecentData(requireContext())
+        viewModel.getRecentData()
 
         viewModel.experiences.observe(viewLifecycleOwner) { newData ->
             experienceAdapter.updateData(newData.data)
@@ -67,7 +67,7 @@ class HomeFragment : Fragment(), RecommendedListener, RecentListener {
         val service = APIClient.getInstance()
         val favDao = FavDataBase.getInstance(requireContext()).favDao()
 
-        val factory = ExperienceFactory(service,favDao)
+        val factory = ExperienceFactory(service)
         viewModel = ViewModelProvider(this, factory)[ExperienceViewModel::class.java]
     }
 

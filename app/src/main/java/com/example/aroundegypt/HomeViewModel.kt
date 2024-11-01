@@ -14,7 +14,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ExperienceViewModel(private val favDao: FavDAO, private var service: ApiService) : ViewModel() {
+class ExperienceViewModel(
+//    private val favDao: FavDAO,
+    private var service: ApiService
+) : ViewModel() {
     private val _experiences: MutableLiveData<ExperiencesResponse> = MutableLiveData()
     val experiences: LiveData<ExperiencesResponse> = _experiences
 
@@ -48,25 +51,28 @@ class ExperienceViewModel(private val favDao: FavDAO, private var service: ApiSe
             }
         }
     }
-    fun getRecentData(context: Context) {
-//        if (NetworkUtils.isNetworkAvailable(context)) {
-            viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    val response = service.getRecentExperiences()
-                    withContext(Dispatchers.Main) {
-                        if (response.isSuccessful && response.body() != null) {
-                            _recent.postValue(response.body())
 
-                        } else {
-                            _message.postValue("Failed to load data: ${response.message()}")
-                        }
-                    }
-                } catch (e: Exception) {
-                    withContext(Dispatchers.Main) {
-                        _message.postValue("Error: ${e.message}")
+    fun getRecentData(
+//        context: Context
+    ) {
+//        if (NetworkUtils.isNetworkAvailable(context)) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = service.getRecentExperiences()
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful && response.body() != null) {
+                        _recent.postValue(response.body())
+
+                    } else {
+                        _message.postValue("Failed to load data: ${response.message()}")
                     }
                 }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _message.postValue("Error: ${e.message}")
+                }
             }
+        }
 //        }
 //        else {
 //            // No internet, fetch data from the Room database
@@ -78,15 +84,14 @@ class ExperienceViewModel(private val favDao: FavDAO, private var service: ApiSe
 
 }
 
-    class ExperienceFactory(
-        private val service: ApiService,
-        private val favDao: FavDAO
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(ExperienceViewModel::class.java)) {
-                return ExperienceViewModel(favDao, service) as T
-            } else {
-                throw IllegalArgumentException("Unknown ViewModel class")
-            }
+class ExperienceFactory(
+    private val service: ApiService
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ExperienceViewModel::class.java)) {
+            return ExperienceViewModel(service) as T
+        } else {
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
+}
