@@ -14,16 +14,19 @@ import kotlinx.coroutines.withContext
 
 class ExperienceViewModel(private var service: ApiService) : ViewModel() {
     private val _experiences: MutableLiveData<ExperiencesResponse> = MutableLiveData()
-    val meals: LiveData<ExperiencesResponse> = _experiences
+    val experiences: LiveData<ExperiencesResponse> = _experiences
+
+    private val _recent: MutableLiveData<ExperiencesResponse> = MutableLiveData()
+    val recent: LiveData<ExperiencesResponse> = _recent
 
     private val _message: MutableLiveData<String> = MutableLiveData()
     val message: LiveData<String> = _message
 
     init {
-        getData()
+        getExperiencedData()
     }
 
-    fun getData() {
+    fun getExperiencedData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = service.getRecommendedExperiences()
@@ -32,6 +35,25 @@ class ExperienceViewModel(private var service: ApiService) : ViewModel() {
                         _experiences.postValue(response.body())
                         Log.i("HomeFragment", "getData: ${response.body()}")
                         Log.d("HomeFragment", "Data fetched: ${response.body()?.data}")
+
+                    } else {
+                        _message.postValue("Failed to load data: ${response.message()}")
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _message.postValue("Error: ${e.message}")
+                }
+            }
+        }
+    }
+    fun getRecentData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = service.getRecentExperiences()
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful && response.body() != null) {
+                        _recent.postValue(response.body())
 
                     } else {
                         _message.postValue("Failed to load data: ${response.message()}")

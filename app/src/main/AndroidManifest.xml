@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AroundEgypt"
         tools:targetApi="31">
         <activity
-            android:name=".Experience"
+            android:name=".ExperienceActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,5 +1,6 @@
 package com.example.aroundegypt
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,10 +8,10 @@ import com.bumptech.glide.Glide
 import com.example.aroundegypt.databinding.ItemRecommendBinding
 import com.example.aroundegypt.experience_response.Data
 
-class ExperienceAdapter(
+class RecommendedAdapter(
     private var data: List<Data>,
-    private val listener: ExperienceListener
-) : RecyclerView.Adapter<ExperienceAdapter.MyViewHolder>() {
+    private val listener: RecommendedListener
+) : RecyclerView.Adapter<RecommendedAdapter.MyViewHolder>() {
 
     class MyViewHolder(val binding: ItemRecommendBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -23,27 +24,28 @@ class ExperienceAdapter(
     override fun getItemCount(): Int = data.size
 
     fun updateData(newData: List<Data>) {
+        Log.d("RecommendedAdapter", "Updating data size: ${newData.size}")
         data = newData
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val experience = data[position]
+        val recommended = data[position]
 
-        holder.binding.tvTitle.text = experience.title
-        holder.binding.tvLikesNum.text = experience.likes_no.toString()
-        holder.binding.tvViewsNum.text = experience.views_no.toString()
+        holder.binding.tvTitle.text = recommended.title
+        holder.binding.tvLikesNum.text = recommended.likes_no.toString()
+        holder.binding.tvViewsNum.text = recommended.views_no.toString()
 
         Glide.with(holder.binding.root.context)
-            .load(experience.cover_photo)
+            .load(recommended.cover_photo)
             .into(holder.binding.ivCover)
 
         holder.binding.root.setOnClickListener {
-            listener.onExperienceClick(holder.binding)
+            listener.onRecommendedClick(recommended.id)
         }
     }
 }
 
-interface ExperienceListener {
-    fun onExperienceClick(experience: ItemRecommendBinding)
+interface RecommendedListener {
+    fun onRecommendedClick(id: String)
 }

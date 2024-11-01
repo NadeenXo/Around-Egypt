@@ -1,5 +1,6 @@
 package com.example.aroundegypt
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,40 +9,52 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.aroundegypt.databinding.ItemRecommendBinding
 import com.example.aroundegypt.network.APIClient
 
-class HomeFragment : Fragment(), ExperienceListener {
+class HomeFragment : Fragment(), RecommendedListener, RecentListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: ExperienceViewModel
-    private lateinit var adapter: ExperienceAdapter
+    private lateinit var experienceAdapter: RecommendedAdapter
+    private lateinit var recentAdapter: RecentAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        return view
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerView(view)
+
+        setUpRecommendedRecyclerView(view)
+        setUpRecentRecyclerView(view)
 
         setupViewModel()
-        viewModel.getData()
+        viewModel.getExperiencedData()
+        viewModel.getRecentData()
 
-        viewModel.meals.observe(viewLifecycleOwner) { newData ->
-            adapter.updateData(newData.data)
+        viewModel.experiences.observe(viewLifecycleOwner) { newData ->
+            experienceAdapter.updateData(newData.data)
+        }
+        viewModel.recent.observe(viewLifecycleOwner) { newData ->
+            recentAdapter.updateData(newData.data)
         }
     }
 
-    private fun setUpRecyclerView(view: View) {
+    private fun setUpRecommendedRecyclerView(view: View) {
         recyclerView = view.findViewById(R.id.rv_recommend)
         recyclerView.layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        adapter = ExperienceAdapter(listOf(), this)
-        recyclerView.adapter = adapter
+        experienceAdapter = RecommendedAdapter(listOf(), this)
+        recyclerView.adapter = experienceAdapter
+    }
+
+    private fun setUpRecentRecyclerView(view: View) {
+        recyclerView = view.findViewById(R.id.rv_recent)
+        recyclerView.layoutManager =
+            LinearLayoutManager(requireActivity())
+        recentAdapter = RecentAdapter(listOf(), this)
+        recyclerView.adapter = recentAdapter
     }
 
     private fun setupViewModel() {
@@ -50,7 +63,20 @@ class HomeFragment : Fragment(), ExperienceListener {
         viewModel = ViewModelProvider(this, factory)[ExperienceViewModel::class.java]
     }
 
-    override fun onExperienceClick(experience: ItemRecommendBinding) {
+    override fun onExperienceClick(id: String) {
         //todo: goto another page
+        navigateToExperience(id)
+    }
+
+    private fun navigateToExperience(id: String) {
+        val intent = Intent(requireActivity(), ExperienceActivity()::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
+    }
+
+    override fun onRecommendedClick(id: String) {
+        val intent = Intent(requireActivity(), ExperienceActivity()::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
     }
 }
