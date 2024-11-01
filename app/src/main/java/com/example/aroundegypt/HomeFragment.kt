@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aroundegypt.network.APIClient
+import com.example.dto.FavDataBase
 
 class HomeFragment : Fragment(), RecommendedListener, RecentListener {
     private lateinit var recyclerView: RecyclerView
@@ -36,7 +37,7 @@ class HomeFragment : Fragment(), RecommendedListener, RecentListener {
 
         setupViewModel()
         viewModel.getExperiencedData()
-        viewModel.getRecentData()
+        viewModel.getRecentData(requireContext())
 
         viewModel.experiences.observe(viewLifecycleOwner) { newData ->
             experienceAdapter.updateData(newData.data)
@@ -64,7 +65,9 @@ class HomeFragment : Fragment(), RecommendedListener, RecentListener {
 
     private fun setupViewModel() {
         val service = APIClient.getInstance()
-        val factory = ExperienceFactory(service)
+        val favDao = FavDataBase.getInstance(requireContext()).favDao()
+
+        val factory = ExperienceFactory(service,favDao)
         viewModel = ViewModelProvider(this, factory)[ExperienceViewModel::class.java]
     }
 

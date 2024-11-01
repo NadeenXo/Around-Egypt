@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_likes_num"
         app:layout_constraintEnd_toStartOf="@+id/tv_likes_num"
         app:layout_constraintTop_toTopOf="@+id/tv_likes_num"
-        app:srcCompat="@drawable/ic_like" />
+        app:srcCompat="@drawable/ic_unlike" />
 
     <TextView
         android:id="@+id/tv_title"

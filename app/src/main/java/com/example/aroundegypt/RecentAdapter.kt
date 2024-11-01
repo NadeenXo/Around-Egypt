@@ -2,17 +2,26 @@ package com.example.aroundegypt
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.aroundegypt.databinding.ItemRecentBinding
 import com.example.aroundegypt.experience_response.Data
+import com.example.dto.FavDAO
+import com.example.dto.FavDataBase
+import com.example.dto.FavouriteTable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecentAdapter(
     private var data: List<Data>,
     private val listener: RecentListener
 ) : RecyclerView.Adapter<RecentAdapter.MyViewHolder>() {
+    private lateinit var favDao: FavDAO
 
     class MyViewHolder(val binding: ItemRecentBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -44,6 +53,48 @@ class RecentAdapter(
         holder.binding.root.setOnClickListener {
             listener.onExperienceClick(experience.id)
         }
+        holder.binding.ivLike.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                withContext(Dispatchers.IO) {
+                    addToFav(experience)
+                    like(holder)
+                }
+            }
+        }
+        favDao = FavDataBase.getInstance(holder.itemView.context).favDao()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val isFavorite = favDao.getFavById(experience.id).isNotEmpty()
+
+            // Update UI on the main thread
+            withContext(Dispatchers.Main) {
+                if (isFavorite) {
+                    like(holder)
+                }
+
+            }
+        }
+    }
+
+    private suspend fun addToFav(recommended: Data): List<Long> {
+        val newFav = FavouriteTable(
+            recommended.id,
+            recommended.title,
+            recommended.address,
+            recommended.description,
+            recommended.cover_photo
+        )
+
+        return favDao.insert(newFav)
+    }
+
+    private fun like(holder: MyViewHolder) {
+        holder.binding.ivLike.setImageDrawable(
+            ContextCompat.getDrawable(
+                holder.itemView.context,
+                R.drawable.ic_like
+            )
+        )
     }
 }
 

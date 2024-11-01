@@ -3,17 +3,27 @@ package com.example.aroundegypt
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.aroundegypt.databinding.ItemRecommendBinding
 import com.example.aroundegypt.experience_response.Data
+import com.example.dto.FavDAO
+import com.example.dto.FavDataBase
+import com.example.dto.FavouriteTable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecommendedAdapter(
     private var data: List<Data>,
     private val listener: RecommendedListener
 ) : RecyclerView.Adapter<RecommendedAdapter.MyViewHolder>() {
+
+    private lateinit var favDao: FavDAO
 
     class MyViewHolder(val binding: ItemRecommendBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -43,9 +53,65 @@ class RecommendedAdapter(
             .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
             .into(holder.binding.ivCover)
 
+        // Check if the meal is favorite
+        favDao = FavDataBase.getInstance(holder.itemView.context).favDao()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val isFavorite = favDao.getFavById(recommended.id).isNotEmpty()
+
+            // Update UI on the main thread
+            withContext(Dispatchers.Main) {
+                if (isFavorite) {
+                    like(holder)
+                }
+//                else {
+//                    dislike(holder)
+//                }
+            }
+        }
+
         holder.binding.root.setOnClickListener {
             listener.onRecommendedClick(recommended.id)
         }
+        holder.binding.ivLike.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                withContext(Dispatchers.IO) {
+                    addToFav(recommended)
+                    like(holder)
+                }
+            }
+        }
+
+    }
+
+    private suspend fun addToFav(recommended: Data): List<Long> {
+        val newFav = FavouriteTable(
+            recommended.id,
+            recommended.title,
+            recommended.address,
+            recommended.description,
+            recommended.cover_photo
+        )
+
+        return favDao.insert(newFav)
+    }
+
+    private fun like(holder: MyViewHolder) {
+        holder.binding.ivLike.setImageDrawable(
+            ContextCompat.getDrawable(
+                holder.itemView.context,
+                R.drawable.ic_like
+            )
+        )
+    }
+
+    private fun dislike(holder: MyViewHolder) {
+        holder.binding.ivLike.setImageDrawable(
+            ContextCompat.getDrawable(
+                holder.itemView.context,
+                R.drawable.ic_unlike
+            )
+        )
     }
 }
 
