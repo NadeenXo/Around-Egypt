@@ -6,7 +6,7 @@
     android:layout_height="200dp">
 
     <ImageView
-        android:id="@+id/iv_recommend"
+        android:id="@+id/iv_cover"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:src="@drawable/recommend_picture"
@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/iv_recommend"
-        app:layout_constraintTop_toTopOf="@+id/iv_recommend"
+        app:layout_constraintEnd_toEndOf="@+id/iv_cover"
+        app:layout_constraintTop_toTopOf="@+id/iv_cover"
         app:srcCompat="@drawable/ic_info" />
 
     <ImageView
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_recommend"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_cover"
         app:layout_constraintEnd_toEndOf="@id/iv_info"
         app:srcCompat="@drawable/ic_gallery" />
 
@@ -39,8 +39,8 @@
         android:layout_height="17dp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="@+id/iv_recommend"
-        app:layout_constraintTop_toTopOf="@+id/iv_recommend"
+        app:layout_constraintStart_toStartOf="@+id/iv_cover"
+        app:layout_constraintTop_toTopOf="@+id/iv_cover"
         app:srcCompat="@drawable/shape_recommend" />
 
     <TextView
@@ -104,7 +104,7 @@
         android:id="@+id/iv_360"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_recommend"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_cover"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -119,7 +119,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_recommend" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_cover" />
 
     <ImageView
         android:id="@+id/iv_like"

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp"
         android:text="@string/welcome_msg"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -40,9 +41,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_explore" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recommened"
+        android:id="@+id/rv_recommend"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/tv_explore"
         app:layout_constraintStart_toStartOf="@+id/tv_recommend"
@@ -56,8 +57,8 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/rv_recommened"
-        app:layout_constraintStart_toStartOf="@+id/rv_recommened"
+        app:layout_constraintEnd_toEndOf="@+id/rv_recommend"
+        app:layout_constraintStart_toStartOf="@+id/rv_recommend"
         app:layout_constraintTop_toBottomOf="@+id/tv_recent"
         tools:itemCount="2"
         tools:listitem="@layout/item_recent" />
@@ -70,6 +71,6 @@
         android:text="@string/most_recent_msg"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/rv_recommened"
-        app:layout_constraintTop_toBottomOf="@+id/rv_recommened" />
+        app:layout_constraintStart_toStartOf="@+id/rv_recommend"
+        app:layout_constraintTop_toBottomOf="@+id/rv_recommend" />
 </androidx.constraintlayout.widget.ConstraintLayout>
