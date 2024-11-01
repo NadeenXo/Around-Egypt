@@ -15,8 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ExperienceViewModel(
-//    private val favDao: FavDAO,
-    private var service: ApiService
+    private var service: ApiService, private val favDao: FavDAO
 ) : ViewModel() {
     private val _experiences: MutableLiveData<ExperiencesResponse> = MutableLiveData()
     val experiences: LiveData<ExperiencesResponse> = _experiences
@@ -85,11 +84,12 @@ class ExperienceViewModel(
 }
 
 class ExperienceFactory(
-    private val service: ApiService
+    private val service: ApiService,
+    private val favDao: FavDAO
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ExperienceViewModel::class.java)) {
-            return ExperienceViewModel(service) as T
+            return ExperienceViewModel(service,favDao) as T
         } else {
             throw IllegalArgumentException("Unknown ViewModel class")
         }

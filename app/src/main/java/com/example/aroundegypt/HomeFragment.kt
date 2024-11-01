@@ -67,7 +67,7 @@ class HomeFragment : Fragment(), RecommendedListener, RecentListener {
         val service = APIClient.getInstance()
         val favDao = FavDataBase.getInstance(requireContext()).favDao()
 
-        val factory = ExperienceFactory(service)
+        val factory = ExperienceFactory(service,favDao)
         viewModel = ViewModelProvider(this, factory)[ExperienceViewModel::class.java]
     }
 
